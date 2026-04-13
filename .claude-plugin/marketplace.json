@@ -71,6 +71,15 @@
       "skills": [
         "./skills/markdown-helper"
       ]
+    },
+    {
+      "name": "resume-review",
+      "description": "Multi-expert resume review panel with HR, Tech Interviewer, and Senior Engineer perspectives. Supports big-tech (h) and SMB (m) calibration",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/resume-review"
+      ]
     }
   ]
 }

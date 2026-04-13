@@ -102,9 +102,27 @@ Markdown document writing assistant with PlantUML/Mermaid diagram generation, fo
 - Use **Mermaid** for: GitHub/GitLab docs, quick flowcharts, mindmaps
 - Both tools can be used together in the same project
 
+### resume-review
+Multi-expert resume review panel with three senior experts (HR, Tech Interviewer, Senior Engineer) independently evaluating your resume from different perspectives.
+
+**Use Cases:**
+- Comprehensive resume review and scoring
+- Pre-interview resume optimization
+- Identify strengths and weaknesses from multiple expert viewpoints
+- Benchmark against big-tech (h) or SMB (m) standards
+
+**Core Features:**
+- Three independent expert perspectives (HR, Tech Interviewer, Senior Engineer)
+- Dual calibration: `h` (big-tech P6-P7) or `m` (SMB mid-senior)
+- Quantified scoring (each expert rates 1-10)
+- Severity markers for issues (`[!]` important, `[i]` suggestion)
+- Overall score with positioning feedback
+- Top 3 priority improvement recommendations
+- Flexible input: paste text, provide file path, or upload
+
 ## Installation
 
-### Install from GitHub
+### Install via Plugin Marketplace
 
 First, add this repository as a plugin marketplace in Claude Code:
 ```
@@ -120,6 +138,29 @@ Then install the skills you need:
 /plugin install book-cover-generator@happy-claude-skills-gxj
 /plugin install report-generator@happy-claude-skills-gxj
 /plugin install markdown-helper@happy-claude-skills-gxj
+/plugin install resume-review@happy-claude-skills-gxj
+```
+
+### Install via Skills CLI
+
+Using [Vercel Labs Skills CLI](https://github.com/vercel-labs/skills) (`npx skills add`), supports Claude Code, Cursor, Codex and 40+ other agents.
+
+```bash
+# Install all skills to Claude Code globally
+npx skills add gxj1134506645/happy-claude-skills -g -a claude-code -y
+
+# Install a specific skill
+npx skills add gxj1134506645/happy-claude-skills --skill docx-format-replicator -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill video-processor -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill wechat-article-writer -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill browser -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill book-cover-generator -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill report-generator -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill markdown-helper -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill resume-review -g -a claude-code -y
+
+# List available skills before installing
+npx skills add gxj1134506645/happy-claude-skills --list
 ```
 
 ### Local Development Installation
@@ -151,6 +192,8 @@ After installation, simply describe your needs in Claude Code:
 > "Create a system architecture sequence diagram"
 
 > "Check the markdown format and fix issues"
+
+> "Review my resume and give me a score"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -228,6 +271,8 @@ happy-claude-skills/
 │   ├── report-generator/
 │   │   └── SKILL.md             # Skill definition
 │   └── markdown-helper/
+│       └── SKILL.md             # Skill definition
+│   └── resume-review/
 │       └── SKILL.md             # Skill definition
 ├── README.md
 └── LICENSE
