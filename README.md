@@ -146,18 +146,18 @@ Then install the skills you need:
 Using [Vercel Labs Skills CLI](https://github.com/vercel-labs/skills) (`npx skills add`), supports Claude Code, Cursor, Codex and 40+ other agents.
 
 ```bash
-# Install all skills to Claude Code globally
-npx skills add gxj1134506645/happy-claude-skills -g -a claude-code -y
+# Install all skills
+npx skills add gxj1134506645/happy-claude-skills
 
 # Install a specific skill
-npx skills add gxj1134506645/happy-claude-skills --skill docx-format-replicator -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill video-processor -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill wechat-article-writer -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill browser -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill book-cover-generator -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill report-generator -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill markdown-helper -g -a claude-code -y
-npx skills add gxj1134506645/happy-claude-skills --skill resume-review -g -a claude-code -y
+npx skills add gxj1134506645/happy-claude-skills --skill docx-format-replicator
+npx skills add gxj1134506645/happy-claude-skills --skill video-processor
+npx skills add gxj1134506645/happy-claude-skills --skill wechat-article-writer
+npx skills add gxj1134506645/happy-claude-skills --skill browser
+npx skills add gxj1134506645/happy-claude-skills --skill book-cover-generator
+npx skills add gxj1134506645/happy-claude-skills --skill report-generator
+npx skills add gxj1134506645/happy-claude-skills --skill markdown-helper
+npx skills add gxj1134506645/happy-claude-skills --skill resume-review
 
 # List available skills before installing
 npx skills add gxj1134506645/happy-claude-skills --list
