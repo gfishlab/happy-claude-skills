@@ -10,75 +10,35 @@
   },
   "plugins": [
     {
-      "name": "docx-format-replicator",
-      "description": "Extract formatting from Word documents and generate new documents with the same format",
+      "name": "document-tools",
+      "description": "Document processing, formatting, and writing tools",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/docx-format-replicator"
-      ]
-    },
-    {
-      "name": "video-processor",
-      "description": "Download and process videos from YouTube with audio extraction, format conversion, and Whisper transcription",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/video-processor"
-      ]
-    },
-    {
-      "name": "wechat-article-writer",
-      "description": "WeChat article writing workflow with research, writing, title generation, and formatting optimization",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/wechat-article-writer"
-      ]
-    },
-    {
-      "name": "browser",
-      "description": "Browser automation with Chrome DevTools Protocol for scraping, testing, and visual verification",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/browser"
-      ]
-    },
-    {
-      "name": "book-cover-generator",
-      "description": "AI-powered book and movie poster generator using Midjourney V5.0 with 5000+ style combinations",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/book-cover-generator"
-      ]
-    },
-    {
-      "name": "report-generator",
-      "description": "Automated weekly report generator based on git commit history",
-      "source": "./",
-      "strict": false,
-      "skills": [
+        "./skills/docx-format-replicator",
+        "./skills/markdown-helper",
         "./skills/report-generator"
       ]
     },
     {
-      "name": "markdown-helper",
-      "description": "Markdown document writing assistant with PlantUML/Mermaid diagram generation, format checking, and table of contents creation",
+      "name": "media-tools",
+      "description": "Video processing and visual content creation tools",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/markdown-helper"
+        "./skills/video-processor",
+        "./skills/book-cover-generator"
       ]
     },
     {
-      "name": "resume-review",
-      "description": "Multi-expert resume review panel with HR, Tech Interviewer, and Senior Engineer perspectives. Supports big-tech (h) and SMB (m) calibration",
+      "name": "content-tools",
+      "description": "Content creation, review, and browser automation workflows",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/resume-review"
+        "./skills/wechat-article-writer",
+        "./skills/resume-review",
+        "./skills/browser"
       ]
     }
   ]
