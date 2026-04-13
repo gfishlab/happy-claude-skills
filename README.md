@@ -126,7 +126,7 @@ Multi-expert resume review panel with three senior experts (HR, Tech Interviewer
 
 First, add this repository as a plugin marketplace in Claude Code:
 ```
-/plugin marketplace add gxj1134506645/happy-claude-skills
+/plugin marketplace add gfishlab/happy-claude-skills
 ```
 
 Then install the skills you need:
@@ -147,27 +147,27 @@ Using [Vercel Labs Skills CLI](https://github.com/vercel-labs/skills) (`npx skil
 
 ```bash
 # Install all skills
-npx skills add gxj1134506645/happy-claude-skills
+npx skills add gfishlab/happy-claude-skills
 
 # Install a specific skill
-npx skills add gxj1134506645/happy-claude-skills --skill docx-format-replicator
-npx skills add gxj1134506645/happy-claude-skills --skill video-processor
-npx skills add gxj1134506645/happy-claude-skills --skill wechat-article-writer
-npx skills add gxj1134506645/happy-claude-skills --skill browser
-npx skills add gxj1134506645/happy-claude-skills --skill book-cover-generator
-npx skills add gxj1134506645/happy-claude-skills --skill report-generator
-npx skills add gxj1134506645/happy-claude-skills --skill markdown-helper
-npx skills add gxj1134506645/happy-claude-skills --skill resume-review
+npx skills add gfishlab/happy-claude-skills --skill docx-format-replicator
+npx skills add gfishlab/happy-claude-skills --skill video-processor
+npx skills add gfishlab/happy-claude-skills --skill wechat-article-writer
+npx skills add gfishlab/happy-claude-skills --skill browser
+npx skills add gfishlab/happy-claude-skills --skill book-cover-generator
+npx skills add gfishlab/happy-claude-skills --skill report-generator
+npx skills add gfishlab/happy-claude-skills --skill markdown-helper
+npx skills add gfishlab/happy-claude-skills --skill resume-review
 
 # List available skills before installing
-npx skills add gxj1134506645/happy-claude-skills --list
+npx skills add gfishlab/happy-claude-skills --list
 ```
 
 ### Local Development Installation
 
 After cloning the repository, use the `--plugin-dir` parameter:
 ```bash
-git clone https://github.com/gxj1134506645/happy-claude-skills.git
+git clone https://github.com/gfishlab/happy-claude-skills.git
 claude --plugin-dir /path/to/happy-claude-skills
 ```
 
