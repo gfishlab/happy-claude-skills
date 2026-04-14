@@ -120,6 +120,20 @@ Multi-expert resume review panel with three senior experts (HR, Tech Interviewer
 - Top 3 priority improvement recommendations
 - Flexible input: paste text, provide file path, or upload
 
+### agent-init
+Lightweight project scaffolding for Codex or Claude Code. Initializes entry files (`AGENTS.md`/`CLAUDE.md`) and runtime directories with rules, hooks, memory, and subagent templates.
+
+**Use Cases:**
+- Bootstrap a new project with agent collaboration scaffolding
+- Supplement existing projects with missing rules, hooks, or memory templates
+- Standardize team project structure across Codex and Claude Code
+
+**Core Features:**
+- Supports both Codex (`AGENTS.md` + `.codex/`) and Claude Code (`CLAUDE.md` + `.claude/`)
+- Idempotent: reuses existing files, only fills in missing parts
+- Generates structured runtime: rules, hooks, memory, subagents
+- Python CLI script (`scripts/init_agent.py`) for automated initialization
+
 ## Installation
 
 ### Install via Plugin Marketplace
@@ -139,6 +153,7 @@ Then install the skills you need:
 /plugin install report-generator@happy-claude-skills-gxj
 /plugin install markdown-helper@happy-claude-skills-gxj
 /plugin install resume-review@happy-claude-skills-gxj
+/plugin install agent-init@happy-claude-skills-gxj
 ```
 
 ### Install via Skills CLI
@@ -158,6 +173,7 @@ npx skills add gfishlab/happy-claude-skills --skill book-cover-generator
 npx skills add gfishlab/happy-claude-skills --skill report-generator
 npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
+npx skills add gfishlab/happy-claude-skills --skill agent-init
 
 # List available skills before installing
 npx skills add gfishlab/happy-claude-skills --list
@@ -194,6 +210,8 @@ After installation, simply describe your needs in Claude Code:
 > "Check the markdown format and fix issues"
 
 > "Review my resume and give me a score"
+
+> "Initialize my project for Claude Code with rules and hooks"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -245,6 +263,10 @@ npm install puppeteer@19.11.1
 npx puppeteer browsers install chrome
 ```
 
+### agent-init
+- Python 3.7+
+- No additional dependencies (uses built-in modules)
+
 ## Project Structure
 
 ```
@@ -274,6 +296,12 @@ happy-claude-skills/
 │       └── SKILL.md             # Skill definition
 │   └── resume-review/
 │       └── SKILL.md             # Skill definition
+│   └── agent-init/
+│       ├── SKILL.md             # Skill definition
+│       ├── agents/              # Agent configs
+│       ├── references/          # Reference docs
+│       ├── scripts/             # Init script
+│       └── templates/           # Scaffold templates
 ├── README.md
 └── LICENSE
 ```

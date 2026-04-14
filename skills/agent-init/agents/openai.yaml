@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Init"
+  short_description: "初始化 Codex 或 Claude Code 项目协作骨架"
+  default_prompt: "请根据当前项目目录和目标 agent，执行轻量初始化，优先检查并复用已有入口文件与运行目录，再补齐 AGENTS.md 或 CLAUDE.md，以及 rules、hooks、memory、subagents 的起始模板。"

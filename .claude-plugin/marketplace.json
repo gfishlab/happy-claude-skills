@@ -40,6 +40,15 @@
         "./skills/resume-review",
         "./skills/browser"
       ]
+    },
+    {
+      "name": "dev-tools",
+      "description": "Project scaffolding and developer tooling",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/agent-init"
+      ]
     }
   ]
 }
