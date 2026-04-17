@@ -20,6 +20,7 @@
 
 - `CLAUDE.md`
 - `.claude/rules/task-classification.md`
+- `.claude/rules/document-lifecycle.md`
 - `.claude/rules/memory-write-policy.md`
 - `.claude/rules/subagent-routing.md`
 - `.claude/rules/review-checklist.md`
@@ -37,8 +38,16 @@
 - `.claude/subagents/executor.md`
 - `.claude/subagents/verifier.md`
 
+当 `docs-profile=engineering` 时，额外创建：
+
+- `docs/architectures/README.md`
+- `docs/plans/README.md`
+- `docs/tasks/README.md`
+
 ## 写入风格
 
 - `CLAUDE.md` 保持精简
 - 详细执行细则写入 `.claude/`
 - 规则优先使用正向表达
+- 工程文档目录采用 `architectures / plans / tasks`
+- 工程文档文件名优先使用稳定英文 slug，不使用年月日前缀

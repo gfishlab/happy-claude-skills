@@ -20,6 +20,7 @@
 
 - `AGENTS.md`
 - `.codex/rules/task-classification.md`
+- `.codex/rules/document-lifecycle.md`
 - `.codex/rules/memory-write-policy.md`
 - `.codex/rules/subagent-routing.md`
 - `.codex/rules/review-checklist.md`
@@ -37,8 +38,16 @@
 - `.codex/subagents/executor.md`
 - `.codex/subagents/verifier.md`
 
+当 `docs-profile=engineering` 时，额外创建：
+
+- `docs/architectures/README.md`
+- `docs/plans/README.md`
+- `docs/tasks/README.md`
+
 ## 写入风格
 
 - `AGENTS.md` 保持精简
 - 详细执行细则写入 `.codex/`
 - 规则优先使用正向表达
+- 工程文档目录采用 `architectures / plans / tasks`
+- 工程文档文件名优先使用稳定英文 slug，不使用年月日前缀

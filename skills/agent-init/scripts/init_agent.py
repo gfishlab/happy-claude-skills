@@ -31,11 +31,23 @@ RUNTIME_TEMPLATE_DIRS = {
     "subagents": TEMPLATES_DIR / "common" / "subagents",
 }
 
+DOCS_TEMPLATE_DIRS = {
+    "architectures": TEMPLATES_DIR / "common" / "docs" / "architectures",
+    "plans": TEMPLATES_DIR / "common" / "docs" / "plans",
+    "tasks": TEMPLATES_DIR / "common" / "docs" / "tasks",
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="初始化 Agent 项目协作骨架")
     parser.add_argument("--agent", required=True, choices=["codex", "claude-code"])
     parser.add_argument("--root", required=True, help="项目根目录")
+    parser.add_argument(
+        "--docs-profile",
+        default="none",
+        choices=["none", "engineering"],
+        help="是否初始化工程文档目录骨架",
+    )
     return parser.parse_args()
 
 
@@ -86,6 +98,20 @@ def init_entry_file(root: Path, agent: str, created: list[str], reused: list[str
         reused.append(str(entry_path))
 
 
+def init_docs_entry_block(root: Path, agent: str, docs_profile: str, created: list[str], reused: list[str]) -> None:
+    if docs_profile == "none":
+        return
+
+    entry_path = root / AGENT_CONFIG[agent]["entry"]
+    append_template = TEMPLATES_DIR / "common" / "docs-entry-append.md"
+    append_block = read_template(append_template)
+
+    if append_missing_block(entry_path, "## 文档规则", append_block):
+        created.append(f"{entry_path} (docs-extended)")
+    else:
+        reused.append(f"{entry_path} (docs block)")
+
+
 def init_runtime_dir(root: Path, agent: str, created: list[str], reused: list[str]) -> None:
     runtime_name = AGENT_CONFIG[agent]["runtime"]
     runtime_path = root / runtime_name
@@ -97,6 +123,32 @@ def init_runtime_dir(root: Path, agent: str, created: list[str], reused: list[st
 
     for category, template_dir in RUNTIME_TEMPLATE_DIRS.items():
         category_path = runtime_path / category
+        if ensure_dir(category_path):
+            created.append(str(category_path))
+        else:
+            reused.append(str(category_path))
+
+        for template_path in sorted(template_dir.glob("*.md")):
+            file_path = category_path / template_path.name
+            content = read_template(template_path)
+            if ensure_file(file_path, content):
+                created.append(str(file_path))
+            else:
+                reused.append(str(file_path))
+
+
+def init_docs_dir(root: Path, docs_profile: str, created: list[str], reused: list[str]) -> None:
+    if docs_profile == "none":
+        return
+
+    docs_path = root / "docs"
+    if ensure_dir(docs_path):
+        created.append(str(docs_path))
+    else:
+        reused.append(str(docs_path))
+
+    for category, template_dir in DOCS_TEMPLATE_DIRS.items():
+        category_path = docs_path / category
         if ensure_dir(category_path):
             created.append(str(category_path))
         else:
@@ -127,12 +179,15 @@ def print_summary(agent: str, root: Path, created: list[str], reused: list[str])
 def main() -> None:
     args = parse_args()
     root = Path(args.root).resolve()
+    root.mkdir(parents=True, exist_ok=True)
 
     created: list[str] = []
     reused: list[str] = []
 
     init_entry_file(root, args.agent, created, reused)
     init_runtime_dir(root, args.agent, created, reused)
+    init_docs_dir(root, args.docs_profile, created, reused)
+    init_docs_entry_block(root, args.agent, args.docs_profile, created, reused)
 
     print_summary(args.agent, root, created, reused)
 
