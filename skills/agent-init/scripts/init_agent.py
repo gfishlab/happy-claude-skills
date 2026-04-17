@@ -154,14 +154,6 @@ def init_docs_dir(root: Path, docs_profile: str, created: list[str], reused: lis
         else:
             reused.append(str(category_path))
 
-        for template_path in sorted(template_dir.glob("*.md")):
-            file_path = category_path / template_path.name
-            content = read_template(template_path)
-            if ensure_file(file_path, content):
-                created.append(str(file_path))
-            else:
-                reused.append(str(file_path))
-
 
 def print_summary(agent: str, root: Path, created: list[str], reused: list[str]) -> None:
     print(f"agent={agent}")

@@ -40,9 +40,9 @@
 
 当 `docs-profile=engineering` 时，额外创建：
 
-- `docs/architectures/README.md`
-- `docs/plans/README.md`
-- `docs/tasks/README.md`
+- `docs/architectures/`
+- `docs/plans/`
+- `docs/tasks/`
 
 ## 写入风格
 
