@@ -34,9 +34,9 @@
 - `.claude/memory/learned-rules.md`
 - `.claude/memory/anti-patterns.md`
 - `.claude/memory/evolution-log.md`
-- `.claude/subagents/planner.md`
-- `.claude/subagents/executor.md`
-- `.claude/subagents/verifier.md`
+- `.claude/agents/planner.md`
+- `.claude/agents/executor.md`
+- `.claude/agents/verifier.md`
 
 当 `docs-profile=engineering` 时，额外创建：
 

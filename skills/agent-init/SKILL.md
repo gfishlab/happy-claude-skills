@@ -1,6 +1,6 @@
 ---
 name: agent-init
-description: 为 Codex 或 Claude Code 初始化轻量项目协作骨架。当用户希望创建或补齐 AGENTS.md 与 .codex，或创建或补齐 CLAUDE.md 与 .claude，并生成 rules、hooks、memory、subagents 的起始模板时使用。支持简单的 init 初始化流程，适用于新项目和已有项目。
+description: 为 Codex 或 Claude Code 初始化轻量项目协作骨架。当用户希望创建或补齐 AGENTS.md 与 .codex，或创建或补齐 CLAUDE.md 与 .claude，并生成 rules、hooks、memory、agents 的起始模板时使用。支持简单的 init 初始化流程，适用于新项目和已有项目。
 ---
 
 # Agent Init
@@ -58,6 +58,8 @@ docs/
 
 ## 运行目录结构
 
+### 通用部分
+
 ```text
 <运行目录>/
   rules/
@@ -78,10 +80,26 @@ docs/
     learned-rules.md
     anti-patterns.md
     evolution-log.md
-  subagents/
-    planner.md
-    executor.md
-    verifier.md
+```
+
+### agents 目录（按工具区分）
+
+Claude Code 使用 Markdown 格式：
+
+```text
+.claude/agents/
+  planner.md
+  executor.md
+  verifier.md
+```
+
+Codex 使用 TOML 格式：
+
+```text
+.codex/agents/
+  planner.toml
+  executor.toml
+  verifier.toml
 ```
 
 ## 内容风格

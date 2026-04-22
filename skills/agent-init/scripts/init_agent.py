@@ -28,7 +28,16 @@ RUNTIME_TEMPLATE_DIRS = {
     "rules": TEMPLATES_DIR / "common" / "rules",
     "hooks": TEMPLATES_DIR / "common" / "hooks",
     "memory": TEMPLATES_DIR / "common" / "memory",
-    "subagents": TEMPLATES_DIR / "common" / "subagents",
+}
+
+# Codex agents use TOML format, Claude Code agents use Markdown
+AGENT_TEMPLATE_OVERRIDES = {
+    "codex": {
+        "agents": {"dir": TEMPLATES_DIR / "common" / "agents-codex", "ext": "*.toml"},
+    },
+    "claude-code": {
+        "agents": {"dir": TEMPLATES_DIR / "common" / "agents", "ext": "*.md"},
+    },
 }
 
 DOCS_TEMPLATE_DIRS = {
@@ -121,14 +130,25 @@ def init_runtime_dir(root: Path, agent: str, created: list[str], reused: list[st
     else:
         reused.append(str(runtime_path))
 
-    for category, template_dir in RUNTIME_TEMPLATE_DIRS.items():
+    agent_overrides = AGENT_TEMPLATE_OVERRIDES.get(agent, {})
+
+    all_categories = dict(RUNTIME_TEMPLATE_DIRS)
+    all_categories["agents"] = agent_overrides.get("agents", {}).get("dir", TEMPLATES_DIR / "common" / "agents")
+
+    for category, template_dir in all_categories.items():
         category_path = runtime_path / category
         if ensure_dir(category_path):
             created.append(str(category_path))
         else:
             reused.append(str(category_path))
 
-        for template_path in sorted(template_dir.glob("*.md")):
+        # Codex agents use *.toml, others use *.md
+        if category == "agents":
+            ext = agent_overrides.get("agents", {}).get("ext", "*.md")
+        else:
+            ext = "*.md"
+
+        for template_path in sorted(template_dir.glob(ext)):
             file_path = category_path / template_path.name
             content = read_template(template_path)
             if ensure_file(file_path, content):
