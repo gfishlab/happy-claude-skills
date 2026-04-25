@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 from pathlib import Path
 
 
@@ -10,12 +11,6 @@ SKILL_DIR = SCRIPT_DIR.parent
 TEMPLATES_DIR = SKILL_DIR / "templates"
 
 AGENT_CONFIG = {
-    "codex": {
-        "entry": "AGENTS.md",
-        "runtime": ".codex",
-        "entry_template": TEMPLATES_DIR / "codex" / "entry.md",
-        "entry_append_template": TEMPLATES_DIR / "codex" / "entry-append.md",
-    },
     "claude-code": {
         "entry": "CLAUDE.md",
         "runtime": ".claude",
@@ -26,17 +21,15 @@ AGENT_CONFIG = {
 
 RUNTIME_TEMPLATE_DIRS = {
     "rules": TEMPLATES_DIR / "common" / "rules",
-    "hooks": TEMPLATES_DIR / "common" / "hooks",
     "memory": TEMPLATES_DIR / "common" / "memory",
 }
 
-# Codex agents use TOML format, Claude Code agents use Markdown
 AGENT_TEMPLATE_OVERRIDES = {
-    "codex": {
-        "agents": {"dir": TEMPLATES_DIR / "common" / "agents-codex", "ext": "*.toml"},
-    },
     "claude-code": {
         "agents": {"dir": TEMPLATES_DIR / "common" / "agents", "ext": "*.md"},
+        "root_files": [
+            (TEMPLATES_DIR / "claude-code" / "settings.json", "settings.json"),
+        ],
     },
 }
 
@@ -49,7 +42,7 @@ DOCS_TEMPLATE_DIRS = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="初始化 Agent 项目协作骨架")
-    parser.add_argument("--agent", required=True, choices=["codex", "claude-code"])
+    parser.add_argument("--agent", required=True, choices=["claude-code"])
     parser.add_argument("--root", required=True, help="项目根目录")
     parser.add_argument(
         "--docs-profile",
@@ -142,7 +135,6 @@ def init_runtime_dir(root: Path, agent: str, created: list[str], reused: list[st
         else:
             reused.append(str(category_path))
 
-        # Codex agents use *.toml, others use *.md
         if category == "agents":
             ext = agent_overrides.get("agents", {}).get("ext", "*.md")
         else:
@@ -151,10 +143,24 @@ def init_runtime_dir(root: Path, agent: str, created: list[str], reused: list[st
         for template_path in sorted(template_dir.glob(ext)):
             file_path = category_path / template_path.name
             content = read_template(template_path)
+            if category == "memory" and template_path.name == "project-progress.md":
+                content = content.replace("YYYY-MM-DD", datetime.date.today().isoformat())
             if ensure_file(file_path, content):
                 created.append(str(file_path))
             else:
                 reused.append(str(file_path))
+
+    # Copy agent-specific root-level config files (e.g. hooks.json, settings.json)
+    root_files = agent_overrides.get("root_files", [])
+    for template_path, dest_name in root_files:
+        if not template_path.exists():
+            continue
+        dest_path = runtime_path / dest_name
+        content = read_template(template_path)
+        if ensure_file(dest_path, content):
+            created.append(str(dest_path))
+        else:
+            reused.append(str(dest_path))
 
 
 def init_docs_dir(root: Path, docs_profile: str, created: list[str], reused: list[str]) -> None:

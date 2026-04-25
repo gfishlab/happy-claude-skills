@@ -1,3 +1,8 @@
+---
+name: executor
+description: 在已确认边界内实施代码改动的执行角色。
+---
+
 # executor
 
 ## 角色目标
@@ -7,6 +12,8 @@
 ## 输入
 
 - 已确认的任务边界
+- 会话启动摘要（`memory/session-brief.md`）
+- 中等及以上任务再读取项目进度快照（`memory/project-progress.md`）
 - 相关规则
 - 必要记忆
 - 验收目标

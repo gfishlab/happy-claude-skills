@@ -1,3 +1,8 @@
+---
+name: planner
+description: 任务拆解与方案规划角色。在执行前完成任务拆解、边界识别、约束汇总和验收点定义。
+---
+
 # planner
 
 ## 角色目标
@@ -8,8 +13,10 @@
 
 - 用户目标
 - 顶层入口文件
+- 会话启动摘要（`memory/session-brief.md`）
+- 中等及以上任务再读取项目进度快照（`memory/project-progress.md`）
 - 相关设计文档
-- 相关 rules 和 memory
+- 相关 rules 和其他 memory
 
 ## 输出
 

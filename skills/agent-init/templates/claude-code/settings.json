@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"$(git rev-parse --show-toplevel)/.claude/memory/session-brief.md\""
+          }
+        ]
+      }
+    ]
+  }
+}

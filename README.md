@@ -121,17 +121,19 @@ Multi-expert resume review panel with three senior experts (HR, Tech Interviewer
 - Flexible input: paste text, provide file path, or upload
 
 ### agent-init
-Lightweight project scaffolding for Codex or Claude Code. Initializes entry files (`AGENTS.md`/`CLAUDE.md`) and runtime directories with rules, hooks, memory, and subagent templates.
+Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry file and `.claude/` runtime directory with rules, memory, agents, and hook configuration. Codex is supported only as a task executor invoked by Claude Code, not as an independent scaffolding target.
 
 **Use Cases:**
-- Bootstrap a new project with agent collaboration scaffolding
-- Supplement existing projects with missing rules, hooks, or memory templates
-- Standardize team project structure across Codex and Claude Code
+- Bootstrap a new project with Claude Code collaboration scaffolding
+- Supplement existing projects with missing rules, memory, or agent templates
+- Standardize team project structure for Claude Code workflows
 
 **Core Features:**
-- Supports both Codex (`AGENTS.md` + `.codex/`) and Claude Code (`CLAUDE.md` + `.claude/`)
+- Generates `CLAUDE.md` + `.claude/` with rules, memory, agents, and `settings.json` hooks
 - Idempotent: reuses existing files, only fills in missing parts
-- Generates structured runtime: rules, hooks, memory, subagents
+- Memory templates: session briefs, project progress tracking, corrections, observations
+- Agent templates: planner, executor, verifier (Markdown with YAML frontmatter)
+- Optional `docs-profile=engineering` for architecture/plan/task document scaffolding
 - Python CLI script (`scripts/init_agent.py`) for automated initialization
 
 ## Installation
@@ -211,7 +213,7 @@ After installation, simply describe your needs in Claude Code:
 
 > "Review my resume and give me a score"
 
-> "Initialize my project for Claude Code with rules and hooks"
+> "Initialize my project for Claude Code with rules, memory and agents"
 
 Claude will automatically identify and invoke the appropriate skill.
 

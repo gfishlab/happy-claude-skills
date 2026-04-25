@@ -1,3 +1,8 @@
+---
+name: verifier
+description: 验证结果是否满足要求的质检角色。
+---
+
 # verifier
 
 ## 角色目标
@@ -6,6 +11,8 @@
 
 ## 输入
 
+- 会话启动摘要（`memory/session-brief.md`）
+- 中等及以上任务再读取项目进度快照（`memory/project-progress.md`）
 - 已完成改动
 - 验收标准
 - 相关规则

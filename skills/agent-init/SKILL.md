@@ -1,25 +1,34 @@
 ---
 name: agent-init
-description: 为 Codex 或 Claude Code 初始化轻量项目协作骨架。当用户希望创建或补齐 AGENTS.md 与 .codex，或创建或补齐 CLAUDE.md 与 .claude，并生成 rules、hooks、memory、agents 的起始模板时使用。支持简单的 init 初始化流程，适用于新项目和已有项目。
+description: 为 Claude Code 初始化项目协作骨架。当用户希望创建或补齐 CLAUDE.md 与 .claude，并生成 rules、memory、agents、hooks 配置的起始模板时使用。Codex 仅作为 Claude Code 临时调用的任务执行工具，本 skill 不生成 AGENTS.md、.codex 或 Codex agents。
 ---
 
 # Agent Init
 
-用于为项目初始化轻量协作骨架。
+用于为项目初始化轻量协作骨架。默认只初始化 **Claude Code 主工作流**。
+
+## 调用前环境检查
+
+使用本 skill 的第一步必须检查当前执行环境。
+
+- 当前执行者是 Claude Code：继续执行初始化流程
+- 当前执行者不是 Claude Code（例如 Codex、ChatGPT 或其他 agent）：停止执行，不运行脚本，不创建或修改文件，并提示用户：
+
+```text
+agent-init 只支持在 Claude Code 中调用。当前执行环境不是 Claude Code，请切换到 Claude Code 后再执行初始化。
+```
 
 当前支持：
-- `codex`
-- `claude-code`
+- `claude-code`：生成 `CLAUDE.md` 与 `.claude/`
 
 执行初始化前，先读取对应参考文件：
-- `references/codex.md`
 - `references/claude-code.md`
 
 ## 初始化参数
 
 期望参数：
 - `init`
-- `agent=<codex|claude-code>`
+- `agent=claude-code`
 - `root=<项目根目录>`
 - `docs-profile=<none|engineering>`
 
@@ -44,47 +53,50 @@ docs/
 
 并补齐顶层入口文件中的文档治理规则，但不额外生成目录级 `README.md`。
 
-## Agent 对应关系
+## Codex 使用边界
 
-### Codex
+Codex 只作为 Claude Code 在具体任务中临时调用的执行工具，不作为项目级协作骨架初始化目标。
 
-- 顶层入口文件：`AGENTS.md`
-- 运行目录：`.codex/`
+- 不生成 `AGENTS.md`
+- 不生成 `.codex/`
+- 不生成 `.codex/agents`
+- 不维护独立 Codex rules/memory
+- 需要 Codex 执行时，由 Claude Code 在任务提示中显式传入范围、事实源、验收标准和必要上下文
 
 ### Claude Code
 
 - 顶层入口文件：`CLAUDE.md`
 - 运行目录：`.claude/`
+- 主工作流事实源
 
 ## 运行目录结构
 
-### 通用部分
+### Claude Code 主体结构
 
 ```text
-<运行目录>/
+.claude/
   rules/
     task-classification.md
     document-lifecycle.md
     memory-write-policy.md
     subagent-routing.md
     review-checklist.md
-  hooks/
-    pre-task.md
-    post-task.md
-    post-failure.md
-    pre-commit.md
   memory/
     index.md
+    session-brief.md
+    project-progress.md
     corrections.md
     observations.md
     learned-rules.md
-    anti-patterns.md
-    evolution-log.md
+  agents/
+    planner.md
+    executor.md
+    verifier.md
 ```
 
-### agents 目录（按工具区分）
+### agents 目录
 
-Claude Code 使用 Markdown 格式：
+Claude Code 使用 Markdown 格式，并且每个文件必须包含 YAML frontmatter（至少 `name` 与 `description`），以便 Claude Code 正确识别子代理：
 
 ```text
 .claude/agents/
@@ -93,13 +105,29 @@ Claude Code 使用 Markdown 格式：
   verifier.md
 ```
 
-Codex 使用 TOML 格式：
+### Hook 配置
+
+Claude Code 配置在 `.claude/settings.json`（随仓库提交共享），hook 条目使用 `hooks` 数组结构：
 
 ```text
-.codex/agents/
-  planner.toml
-  executor.toml
-  verifier.toml
+.claude/settings.json
+```
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"$(git rev-parse --show-toplevel)/.claude/memory/session-brief.md\""
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
 ## 内容风格
@@ -121,7 +149,5 @@ Codex 使用 TOML 格式：
 
 ### references/
 
-- `references/codex.md`
-  - Codex 的入口文件与运行目录约定
 - `references/claude-code.md`
   - Claude Code 的入口文件与运行目录约定
