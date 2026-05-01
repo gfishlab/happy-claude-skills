@@ -120,6 +120,20 @@ Multi-expert resume review panel with three senior experts (HR, Tech Interviewer
 - Top 3 priority improvement recommendations
 - Flexible input: paste text, provide file path, or upload
 
+### pic-upload
+Upload local image files to image hosting via PicGo Server and return permanent CDN URLs.
+
+**Use Cases:**
+- Upload screenshots or generated images to get permanent URLs
+- Batch upload multiple images at once
+- Convert local image paths to CDN links for markdown or web content
+
+**Core Features:**
+- Uploads via PicGo Server API (localhost:36677)
+- Supports PNG, JPG, JPEG, GIF, WEBP, SVG, BMP
+- Single and batch upload modes
+- Returns CDN URLs ready for use in markdown
+
 ### agent-init
 Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry file and `.claude/` runtime directory with rules, memory, agents, and hook configuration. Codex is supported only as a task executor invoked by Claude Code, not as an independent scaffolding target.
 
@@ -155,6 +169,7 @@ Then install the skills you need:
 /plugin install report-generator@happy-claude-skills-gxj
 /plugin install markdown-helper@happy-claude-skills-gxj
 /plugin install resume-review@happy-claude-skills-gxj
+/plugin install pic-upload@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
 ```
 
@@ -175,6 +190,7 @@ npx skills add gfishlab/happy-claude-skills --skill book-cover-generator
 npx skills add gfishlab/happy-claude-skills --skill report-generator
 npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
+npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 
 # List available skills before installing
@@ -265,6 +281,9 @@ npm install puppeteer@19.11.1
 npx puppeteer browsers install chrome
 ```
 
+### pic-upload
+- [PicGo](https://molunerfinn.com/PicGo/) with Server enabled (default port 36677)
+
 ### agent-init
 - Python 3.7+
 - No additional dependencies (uses built-in modules)
@@ -297,6 +316,8 @@ happy-claude-skills/
 │   └── markdown-helper/
 │       └── SKILL.md             # Skill definition
 │   └── resume-review/
+│       └── SKILL.md             # Skill definition
+│   └── pic-upload/
 │       └── SKILL.md             # Skill definition
 │   └── agent-init/
 │       ├── SKILL.md             # Skill definition
