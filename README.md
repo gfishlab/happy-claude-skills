@@ -150,6 +150,23 @@ Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry f
 - Optional `docs-profile=engineering` for architecture/plan/task document scaffolding
 - Python CLI script (`scripts/init_agent.py`) for automated initialization
 
+### GoCloudNativeBestPractices
+Go (Golang) cloud-native best practices for writing production-grade, concurrent-safe, and cloud-native-friendly code. Covers Go 1.20 through 1.26 with version-specific compatibility guidance.
+
+**Use Cases:**
+- Write production-grade Go microservices and HTTP servers
+- Review and refactor existing Go code for cloud-native standards
+- Ensure error handling, context propagation, and concurrency safety
+- Handle multi-version Go development (1.20-1.26)
+
+**Core Features:**
+- Error handling: explicit wrapping with `%w`, sentinel errors, custom error types
+- Concurrency: errgroup, worker pool, sync primitives, goroutine leak prevention
+- HTTP services: stdlib net/http, middleware chains, timeouts, health checks
+- Database: connection pooling, context-aware queries, transaction patterns
+- Version compatibility: per-version feature guide with code examples
+- Patterns library: worker pool, circuit breaker, rate limiter, retry with backoff
+
 ## Installation
 
 ### Install via Plugin Marketplace
@@ -171,6 +188,7 @@ Then install the skills you need:
 /plugin install resume-review@happy-claude-skills-gxj
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
+/plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 ```
 
 ### Install via Skills CLI
@@ -192,6 +210,7 @@ npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
+npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 
 # List available skills before installing
 npx skills add gfishlab/happy-claude-skills --list
@@ -230,6 +249,8 @@ After installation, simply describe your needs in Claude Code:
 > "Review my resume and give me a score"
 
 > "Initialize my project for Claude Code with rules, memory and agents"
+
+> "Write a Go HTTP service with worker pool and graceful shutdown"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -325,6 +346,9 @@ happy-claude-skills/
 │       ├── references/          # Reference docs
 │       ├── scripts/             # Init script
 │       └── templates/           # Scaffold templates
+│   └── GoCloudNativeBestPractices/
+│       ├── SKILL.md             # Skill definition
+│       └── references/          # Go patterns & version compat guides
 ├── README.md
 └── LICENSE
 ```

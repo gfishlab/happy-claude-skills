@@ -150,6 +150,23 @@ Markdown文档编写辅助工具，支持PlantUML/Mermaid图表生成、格式�
 - 可选 `docs-profile=engineering` 初始化工程文档骨架（架构/计划/任务）
 - 提供 Python CLI 脚本（`scripts/init_agent.py`）自动化初始化
 
+### GoCloudNativeBestPractices
+Go (Golang) 云原生最佳实践，用于编写生产级、并发安全、云原生友好的 Go 代码。覆盖 Go 1.20 至 1.26 多版本兼容指南。
+
+**适用场景：**
+- 编写生产级 Go 微服务和 HTTP 服务
+- 审查和重构现有 Go 代码是否符合云原生标准
+- 确保错误处理、context 传播和并发安全
+- 多版本 Go 开发（1.20-1.26）兼容性处理
+
+**核心功能：**
+- 错误处理：`%w` 包装、哨兵错误、自定义错误类型
+- 并发编程：errgroup、worker pool、sync 原语、goroutine 泄漏防护
+- HTTP 服务：标准库 net/http、中间件链、超时控制、健康检查
+- 数据库：连接池配置、context 查询、事务处理
+- 版本兼容：逐版本特性指南与代码示例
+- 模式库：worker pool、circuit breaker、rate limiter、retry with backoff
+
 ## 安装方法
 
 ### 通过插件市场安装
