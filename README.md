@@ -165,7 +165,7 @@ Golang cloud-native deployment patterns for containerized Go services. Complemen
 - Kubernetes liveness/readiness probe patterns
 - Go version compatibility matrix and syntax gates
 
-**Note:** For Go coding best practices, install [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) instead.
+**Recommended companion:** For comprehensive Go coding best practices (error handling, concurrency, testing, etc.), consider also installing [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang).
 
 ## Installation
 

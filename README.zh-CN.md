@@ -165,7 +165,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 - Kubernetes 存活/就绪探针模式
 - Go 版本兼容矩阵与语法差异
 
-**注意：** Go 编码最佳实践请安装 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)。
+**推荐搭配：** 如需全面的 Go 编码最佳实践（错误处理、并发、测试等），建议同时安装 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)。
 
 ## 安装方法
 
@@ -188,6 +188,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install resume-review@happy-claude-skills-gxj
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
+/plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 ```
 
 ### 通过 Skills CLI 安装
@@ -209,6 +210,7 @@ npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
+npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 
 # 安装前先查看可用的 skills
 npx skills add gfishlab/happy-claude-skills --list
