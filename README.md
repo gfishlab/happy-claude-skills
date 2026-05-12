@@ -151,21 +151,21 @@ Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry f
 - Python CLI script (`scripts/init_agent.py`) for automated initialization
 
 ### GoCloudNativeBestPractices
-Go (Golang) cloud-native best practices for writing production-grade, concurrent-safe, and cloud-native-friendly code. Covers Go 1.20 through 1.26 with version-specific compatibility guidance.
+Golang cloud-native deployment patterns for containerized Go services. Complements [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) (which covers code style, error handling, concurrency, testing, etc.) with deployment-specific guidance.
 
 **Use Cases:**
-- Write production-grade Go microservices and HTTP servers
-- Review and refactor existing Go code for cloud-native standards
-- Ensure error handling, context propagation, and concurrency safety
-- Handle multi-version Go development (1.20-1.26)
+- Create multi-stage Dockerfile for Go (scratch/distroless)
+- Set up Makefile for Go projects
+- Configure Kubernetes health probes (`/healthz`, `/readyz`)
+- Check Go version compatibility (1.20-1.26)
 
 **Core Features:**
-- Error handling: explicit wrapping with `%w`, sentinel errors, custom error types
-- Concurrency: errgroup, worker pool, sync primitives, goroutine leak prevention
-- HTTP services: stdlib net/http, middleware chains, timeouts, health checks
-- Database: connection pooling, context-aware queries, transaction patterns
-- Version compatibility: per-version feature guide with code examples
-- Patterns library: worker pool, circuit breaker, rate limiter, retry with backoff
+- Multi-stage Dockerfile templates with distroless images
+- Makefile with build, test, lint, cover, docker targets
+- Kubernetes liveness/readiness probe patterns
+- Go version compatibility matrix and syntax gates
+
+**Note:** For Go coding best practices, install [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) instead.
 
 ## Installation
 
@@ -250,7 +250,11 @@ After installation, simply describe your needs in Claude Code:
 
 > "Initialize my project for Claude Code with rules, memory and agents"
 
-> "Write a Go HTTP service with worker pool and graceful shutdown"
+> "Create a Dockerfile for my Go service"
+
+> "Set up a Makefile for my Go project"
+
+> "Configure Kubernetes health probes for my Go service"
 
 Claude will automatically identify and invoke the appropriate skill.
 

@@ -151,21 +151,21 @@ Markdown文档编写辅助工具，支持PlantUML/Mermaid图表生成、格式�
 - 提供 Python CLI 脚本（`scripts/init_agent.py`）自动化初始化
 
 ### GoCloudNativeBestPractices
-Go (Golang) 云原生最佳实践，用于编写生产级、并发安全、云原生友好的 Go 代码。覆盖 Go 1.20 至 1.26 多版本兼容指南。
+Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)（覆盖代码风格、错误处理、并发、测试等）的部署专属指导。
 
 **适用场景：**
-- 编写生产级 Go 微服务和 HTTP 服务
-- 审查和重构现有 Go 代码是否符合云原生标准
-- 确保错误处理、context 传播和并发安全
-- 多版本 Go 开发（1.20-1.26）兼容性处理
+- 创建 Go 多阶段 Dockerfile（scratch/distroless）
+- 为 Go 项目配置 Makefile
+- 配置 Kubernetes 健康探针（`/healthz`、`/readyz`）
+- 检查 Go 版本兼容性（1.20-1.26）
 
 **核心功能：**
-- 错误处理：`%w` 包装、哨兵错误、自定义错误类型
-- 并发编程：errgroup、worker pool、sync 原语、goroutine 泄漏防护
-- HTTP 服务：标准库 net/http、中间件链、超时控制、健康检查
-- 数据库：连接池配置、context 查询、事务处理
-- 版本兼容：逐版本特性指南与代码示例
-- 模式库：worker pool、circuit breaker、rate limiter、retry with backoff
+- 多阶段 Dockerfile 模板（distroless 镜像）
+- Makefile 模板（build、test、lint、cover、docker）
+- Kubernetes 存活/就绪探针模式
+- Go 版本兼容矩阵与语法差异
+
+**注意：** Go 编码最佳实践请安装 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)。
 
 ## 安装方法
 
@@ -247,6 +247,12 @@ claude --plugin-dir /path/to/happy-claude-skills
 > "帮我评审一下简历并打分"
 
 > "为我的项目初始化 Claude Code 协作骨架，包含规则、记忆和代理模板"
+
+> "为我的 Go 服务创建 Dockerfile"
+
+> "为我的 Go 项目配置 Makefile"
+
+> "配置 Kubernetes 健康探针"
 
 Claude 会自动识别并调用相应的 skill。
 
