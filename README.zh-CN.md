@@ -167,6 +167,21 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 
 **推荐搭配：** 如需全面的 Go 编码最佳实践（错误处理、并发、测试等），建议同时安装 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)。
 
+### proxy-domain-conflict-debugging
+诊断和修复 VPN/代理设置与公司内部域名之间的冲突，特别是终端 HTTP/HTTPS/ALL_PROXY、NO_PROXY/no_proxy、macOS GUI 启动环境、Git 代理配置和 Go 模块设置导致私有 Git 或 Go 模块下载失败的情况。
+
+**适用场景：**
+- 修复公司私有域名的 Go 模块下载失败（EOF、unrecognized import path、`?go-get=1` 错误）
+- 诊断 VPN/代理路由与内部 Git 仓库的冲突
+- 配置 NO_PROXY、GOPRIVATE、GONOPROXY、GONOSUMDB 用于公司域名
+- 修复 macOS IDE 代理环境变量继承问题
+- 调试代理工具（如 Clash、Surge）的 Fake-IP DNS 范围（198.18.0.0/15）
+
+**核心功能：**
+- 只读诊断脚本，覆盖代理环境、Go 环境、Git 配置、macOS GUI 环境、DNS、curl 和 Go 模块下载
+- NO_PROXY、GOPRIVATE、Git 主机特定代理覆盖、`launchctl setenv` 的分步修复模式
+- Go 私有模块路由和故障解读参考指南
+
 ## 安装方法
 
 ### 通过插件市场安装
@@ -189,6 +204,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
+/plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 ```
 
 ### 通过 Skills CLI 安装
@@ -211,6 +227,7 @@ npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
+npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 
 # 安装前先查看可用的 skills
 npx skills add gfishlab/happy-claude-skills --list
@@ -255,6 +272,8 @@ claude --plugin-dir /path/to/happy-claude-skills
 > "为我的 Go 项目配置 Makefile"
 
 > "配置 Kubernetes 健康探针"
+
+> "诊断公司私有域名的 Go 模块下载失败（EOF 错误）"
 
 Claude 会自动识别并调用相应的 skill。
 
@@ -313,6 +332,10 @@ npx puppeteer browsers install chrome
 - Python 3.7+
 - 无需额外依赖（使用内置模块）
 
+### proxy-domain-conflict-debugging
+- Bash 3.2+
+- 无需额外依赖（使用标准系统工具：curl、dig、dscacheutil、launchctl、git、go）
+
 ## 项目结构
 
 ```
@@ -350,6 +373,14 @@ happy-claude-skills/
 │       ├── references/          # 参考文档
 │       ├── scripts/             # 初始化脚本
 │       └── templates/           # 骨架模板
+│   └── GoCloudNativeBestPractices/
+│       ├── SKILL.md             # Skill 定义
+│       └── references/          # Go 模式与版本兼容指南
+│   └── proxy-domain-conflict-debugging/
+│       ├── SKILL.md             # Skill 定义
+│       ├── agents/              # Agent 配置
+│       ├── references/          # Go 私有模块参考
+│       └── scripts/             # 诊断脚本
 ├── README.md
 └── LICENSE
 ```

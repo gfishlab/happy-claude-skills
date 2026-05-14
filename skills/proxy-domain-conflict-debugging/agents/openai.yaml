@@ -1,0 +1,4 @@
+interface:
+  display_name: "Proxy Domain Conflict Debugging"
+  short_description: "Diagnose proxy and private Go domain conflicts"
+  default_prompt: "Use $proxy-domain-conflict-debugging to diagnose proxy, Git, and Go module access problems for a company private domain."

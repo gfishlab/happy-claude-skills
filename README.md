@@ -167,6 +167,21 @@ Golang cloud-native deployment patterns for containerized Go services. Complemen
 
 **Recommended companion:** For comprehensive Go coding best practices (error handling, concurrency, testing, etc.), consider also installing [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang).
 
+### proxy-domain-conflict-debugging
+Diagnose and fix conflicts between VPN/proxy settings and internal company domains, especially when terminal HTTP/HTTPS/ALL_PROXY, NO_PROXY/no_proxy, macOS GUI launch environment, Git proxy config, and Go module settings cause private Git or Go module downloads to fail.
+
+**Use Cases:**
+- Fix Go module download failures for private company domains (EOF, unrecognized import path, `?go-get=1` errors)
+- Diagnose VPN/proxy routing conflicts with internal Git repositories
+- Configure NO_PROXY, GOPRIVATE, GONOPROXY, GONOSUMDB for company domains
+- Fix macOS IDE proxy environment inheritance issues
+- Debug fake-IP DNS ranges (198.18.0.0/15) from proxy tools like Clash or Surge
+
+**Core Features:**
+- Read-only diagnostic script covering proxy env, Go env, Git config, macOS GUI env, DNS, curl, and Go module download
+- Step-by-step fix patterns for NO_PROXY, GOPRIVATE, Git host-specific proxy overrides, and `launchctl setenv`
+- Reference guide for Go private module routing and failure interpretation
+
 ## Installation
 
 ### Install via Plugin Marketplace
@@ -189,6 +204,7 @@ Then install the skills you need:
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
+/plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 ```
 
 ### Install via Skills CLI
@@ -211,6 +227,7 @@ npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
+npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 
 # List available skills before installing
 npx skills add gfishlab/happy-claude-skills --list
@@ -255,6 +272,8 @@ After installation, simply describe your needs in Claude Code:
 > "Set up a Makefile for my Go project"
 
 > "Configure Kubernetes health probes for my Go service"
+
+> "Diagnose why my Go module download fails with EOF for company private domain"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -313,6 +332,10 @@ npx puppeteer browsers install chrome
 - Python 3.7+
 - No additional dependencies (uses built-in modules)
 
+### proxy-domain-conflict-debugging
+- Bash 3.2+
+- No additional dependencies (uses standard system tools: curl, dig, dscacheutil, launchctl, git, go)
+
 ## Project Structure
 
 ```
@@ -353,6 +376,11 @@ happy-claude-skills/
 │   └── GoCloudNativeBestPractices/
 │       ├── SKILL.md             # Skill definition
 │       └── references/          # Go patterns & version compat guides
+│   └── proxy-domain-conflict-debugging/
+│       ├── SKILL.md             # Skill definition
+│       ├── agents/              # Agent configs
+│       ├── references/          # Go private module reference
+│       └── scripts/             # Diagnostic script
 ├── README.md
 └── LICENSE
 ```
