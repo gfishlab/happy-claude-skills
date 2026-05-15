@@ -197,6 +197,24 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 - 完整的 golangci-lint 配置（25+ linters）可直接复制到项目
 - 快速参考表，编码时可快速查阅规则
 
+### golang-security
+公司 Go 安全编码规范 — 涵盖内存安全、文件系统安全、命令注入防护、TLS通信安全、敏感数据保护、加密解密、输入校验、SQL注入防护、SSRF防护、模板注入、CORS、安全响应头、会话管理、CSRF防护、访问控制和并发安全。替代社区安全 skill（samber/cc-skills-golang golang-security、golang-safety）。
+
+**适用场景：**
+- 按公司安全规范编写 Go 代码
+- Go 代码安全审计和审查
+- 识别和修复安全漏洞（注入、XSS、SSRF 等）
+- 正确配置 TLS、CSRF、CORS 和会话管理
+
+**核心功能：**
+- 11 个安全领域，必须/推荐两级规则等级
+- 内存安全：slice 越界、nil 指针、整数溢出、make 长度校验、协程退出
+- Web 安全：模板注入、CORS、安全响应头、响应编码
+- 数据保护：禁止硬编码密钥、日志脱敏、加密存储、密钥管理
+- SQL 安全：预编译语句、参数化查询、ORDER BY 白名单
+- 并发安全：闭包循环变量、并发 map 写入、同步原语
+- 完整的安全审查清单，支持结构化代码审计
+
 ## 安装方法
 
 ### 通过插件市场安装
@@ -221,6 +239,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 /plugin install golang-company-standards@happy-claude-skills-gxj
+/plugin install golang-security@happy-claude-skills-gxj
 ```
 
 ### 通过 Skills CLI 安装
@@ -245,6 +264,7 @@ npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
+npx skills add gfishlab/happy-claude-skills --skill golang-security
 
 # 安装前先查看可用的 skills
 npx skills add gfishlab/happy-claude-skills --list
@@ -295,6 +315,10 @@ claude --plugin-dir /path/to/happy-claude-skills
 > "按公司规范编写 Go 代码"
 
 > "修复这段 Go 代码使其符合公司编码规范"
+
+> "安全审计这个 Go 服务的漏洞"
+
+> "审查我的 Go 代码是否存在 SQL 注入和命令注入"
 
 Claude 会自动识别并调用相应的 skill。
 
@@ -413,6 +437,9 @@ happy-claude-skills/
 │   └── golang-company-standards/
 │       ├── SKILL.md             # Skill 定义
 │       └── references/          # golangci-lint 配置
+│   └── golang-security/
+│       ├── SKILL.md             # Skill 定义
+│       └── references/          # 安全规范参考文档（11 个领域）
 ├── README.md
 └── LICENSE
 ```

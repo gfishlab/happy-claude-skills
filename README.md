@@ -197,6 +197,24 @@ Company Go coding standards — enforces internal coding specification covering 
 - Full golangci-lint configuration (25+ linters) as a copyable reference file
 - Quick reference table for fast rule lookup during coding
 
+### golang-security
+Company Go security coding standards — covers memory safety, filesystem security, command injection, TLS, sensitive data protection, cryptography, input validation, SQL injection, SSRF, template injection, CORS, security headers, session management, CSRF, access control, and concurrency safety. Supersedes community security skills (samber/cc-skills-golang golang-security, golang-safety).
+
+**Use Cases:**
+- Write secure Go code following company security guidelines
+- Security audit and review of Go code
+- Identify and fix security vulnerabilities (injection, XSS, SSRF, etc.)
+- Configure TLS, CSRF, CORS, and session management correctly
+
+**Core Features:**
+- 11 security domains with mandatory/recommended rule levels
+- Memory safety: slice bounds, nil pointers, integer overflow, make validation, goroutine lifecycle
+- Web security: template injection, CORS, security headers, response encoding
+- Data protection: no hardcoded secrets, safe logging, encrypted storage, key management
+- SQL safety: prepared statements, parameterized queries, ORDER BY whitelist
+- Concurrency safety: closure loop variables, concurrent map writes, sync primitives
+- Complete security review checklist for structured code auditing
+
 ## Installation
 
 ### Install via Plugin Marketplace
@@ -221,6 +239,7 @@ Then install the skills you need:
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 /plugin install golang-company-standards@happy-claude-skills-gxj
+/plugin install golang-security@happy-claude-skills-gxj
 ```
 
 ### Install via Skills CLI
@@ -245,6 +264,7 @@ npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
+npx skills add gfishlab/happy-claude-skills --skill golang-security
 
 # List available skills before installing
 npx skills add gfishlab/happy-claude-skills --list
@@ -295,6 +315,10 @@ After installation, simply describe your needs in Claude Code:
 > "Write Go code following our company standards"
 
 > "Fix this Go code to meet our coding specification"
+
+> "Security audit this Go service for vulnerabilities"
+
+> "Review my Go code for SQL injection and command injection"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -413,6 +437,9 @@ happy-claude-skills/
 │   └── golang-company-standards/
 │       ├── SKILL.md             # Skill definition
 │       └── references/          # golangci-lint config
+│   └── golang-security/
+│       ├── SKILL.md             # Skill definition
+│       └── references/          # Security reference docs (11 domains)
 ├── README.md
 └── LICENSE
 ```
