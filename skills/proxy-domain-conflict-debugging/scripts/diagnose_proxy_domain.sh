@@ -93,3 +93,54 @@ if [[ -n "$module_dir" ]]; then
 else
   echo "skipped: pass a module directory as the second argument"
 fi
+
+echo "== /etc/hosts entries for domain =="
+if command -v grep >/dev/null 2>&1; then
+  grep -i "$domain" /etc/hosts || echo "(no entries)"
+else
+  echo "grep: not found"
+fi
+echo
+
+echo "== Clash / Mihomo config check =="
+CLASH_VERGE_DIR="$HOME/Library/Application Support/io.github.clash-verge-rev.clash-verge-rev"
+if [[ -d "$CLASH_VERGE_DIR" ]]; then
+  echo "-- running config rules (first 15) --"
+  if [[ -f "$CLASH_VERGE_DIR/clash-verge.yaml" ]]; then
+    grep -A15 '^rules:' "$CLASH_VERGE_DIR/clash-verge.yaml" | head -16
+  else
+    echo "clash-verge.yaml not found"
+  fi
+  echo
+
+  echo "-- running config DNS --"
+  if [[ -f "$CLASH_VERGE_DIR/clash-verge.yaml" ]]; then
+    sed -n '/^dns:/,/^[a-z]/{ p }' "$CLASH_VERGE_DIR/clash-verge.yaml" | head -30
+  fi
+  echo
+
+  echo "-- global Merge.yaml --"
+  if [[ -f "$CLASH_VERGE_DIR/profiles/Merge.yaml" ]]; then
+    cat "$CLASH_VERGE_DIR/profiles/Merge.yaml"
+  else
+    echo "Merge.yaml not found"
+  fi
+
+  echo "-- Clash DNS resolution --"
+  if command -v dig >/dev/null 2>&1; then
+    # Try common Clash DNS listen ports
+    for port in 53 1053; do
+      result=$(dig +short "@127.0.0.1" -p "$port" "$domain" 2>/dev/null)
+      if [[ -n "$result" ]]; then
+        echo "dig @127.0.0.1 -p $port $domain → $result"
+        if echo "$result" | grep -qE '^198\.18\.'; then
+          echo "  ⚠ FAKE-IP detected! Add $domain to fake-ip-filter and nameserver-policy in Merge.yaml"
+        fi
+        break
+      fi
+    done
+  fi
+else
+  echo "Clash Verge Rev directory not found (not installed or different path)"
+fi
+echo
