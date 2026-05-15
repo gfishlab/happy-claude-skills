@@ -182,6 +182,21 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 - NO_PROXY、GOPRIVATE、Git 主机特定代理覆盖、`launchctl setenv` 的分步修复模式
 - Go 私有模块路由和故障解读参考指南
 
+### golang-company-standards
+公司 Go 编码规范 — 强制执行内部编码规范，涵盖代码风格、错误处理、命名、控制结构、函数设计、注释、依赖管理和代码检查。替代社区同类 skill（golang-code-style、golang-naming、golang-lint、golang-error-handling、golang-documentation、golang-testing）。
+
+**适用场景：**
+- 按公司编码规范编写 Go 代码
+- 审查和修复 Go 代码使其符合公司规范
+- 配置 golangci-lint 公司标准配置
+- 新建 Go 项目时设置正确的编码约定
+
+**核心功能：**
+- 10 大规则类别：格式化、import、错误处理、注释、命名、控制结构、函数、测试、依赖管理、代码检查
+- 必须/推荐/可选三级规则等级，边界清晰
+- 完整的 golangci-lint 配置（25+ linters）可直接复制到项目
+- 快速参考表，编码时可快速查阅规则
+
 ## 安装方法
 
 ### 通过插件市场安装
@@ -205,6 +220,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
+/plugin install golang-company-standards@happy-claude-skills-gxj
 ```
 
 ### 通过 Skills CLI 安装
@@ -228,6 +244,7 @@ npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
+npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
 
 # 安装前先查看可用的 skills
 npx skills add gfishlab/happy-claude-skills --list
@@ -274,6 +291,10 @@ claude --plugin-dir /path/to/happy-claude-skills
 > "配置 Kubernetes 健康探针"
 
 > "诊断公司私有域名的 Go 模块下载失败（EOF 错误）"
+
+> "按公司规范编写 Go 代码"
+
+> "修复这段 Go 代码使其符合公司编码规范"
 
 Claude 会自动识别并调用相应的 skill。
 
@@ -336,6 +357,14 @@ npx puppeteer browsers install chrome
 - Bash 3.2+
 - 无需额外依赖（使用标准系统工具：curl、dig、dscacheutil、launchctl、git、go）
 
+### golang-company-standards
+- Go 1.11+
+- golangci-lint v2.6.2
+
+```bash
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.6.2
+```
+
 ## 项目结构
 
 ```
@@ -381,6 +410,9 @@ happy-claude-skills/
 │       ├── agents/              # Agent 配置
 │       ├── references/          # Go 私有模块参考
 │       └── scripts/             # 诊断脚本
+│   └── golang-company-standards/
+│       ├── SKILL.md             # Skill 定义
+│       └── references/          # golangci-lint 配置
 ├── README.md
 └── LICENSE
 ```

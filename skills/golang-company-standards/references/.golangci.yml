@@ -1,0 +1,140 @@
+# Company standard golangci-lint configuration
+# Install: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.6.2
+# Reference: https://github.com/golangci/golangci-lint
+# Example: https://github.com/golangci/golangci-lint/blob/master/.golangci.yml
+
+linters-settings:
+  dupl:
+    threshold: 100
+  funlen:
+    lines: -1 # lines (code + empty lines) is not a right metric; leads to code without empty lines or one-liners
+    statements: 50
+  goconst:
+    min-len: 2
+    min-occurrences: 3
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - dupImport # https://github.com/go-critic/go-critic/issues/845
+      - ifElseChain
+      - octalLiteral
+      - whyNoLint
+  gocyclo:
+    min-complexity: 15
+  gofmt:
+    rewrite-rules:
+      - pattern: 'interface{}'
+        replacement: 'any'
+  goimports:
+    local-prefixes: git.cardinfolink.net/Everonet/online
+  gomnd:
+    # don't include "operation" and "assign"
+    checks:
+      - argument
+      - case
+      - condition
+      - return
+    ignored-numbers:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+    ignored-functions:
+      - strings.SplitN
+  govet:
+    check-shadowing: true
+    settings:
+      printf:
+        funcs:
+          - (git.cardinfolink.net/pkgs/log.Logger).Debugf
+          - (git.cardinfolink.net/pkgs/log.Logger).Infof
+          - (git.cardinfolink.net/pkgs/log.Logger).Warnf
+          - (git.cardinfolink.net/pkgs/log.Logger).Errorf
+          - (git.cardinfolink.net/pkgs/log.Logger).Panicf
+          - (git.cardinfolink.net/pkgs/log.Logger).Fatalf
+  lll:
+    line-length: 140
+  misspell:
+    locale: US
+  nolintlint:
+    allow-unused: false # report any unused nolint directives
+    require-explanation: false # don't require an explanation for nolint directives
+    require-specific: false # don't require nolint directives to be specific about which linter is being skipped
+  revive:
+    rules:
+      - name: unexported-return
+        disabled: true
+      - name: unused-parameter
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose         # http.resp.body memory leak check
+    - deadcode          # unused variable declarations
+    - dogsled           # blank identifier assignment check (default 2)
+    - dupl              # duplicate code check
+    - errcheck          # unchecked error returns
+    - exportloopref     # loop variable capture check
+    - funlen            # function max lines/statements
+    - gocheckcompilerdirectives
+    - goconst           # constant string check
+    - gocritic          # comprehensive Go critic
+    - gocyclo           # cyclomatic complexity
+    - gofmt             # code formatting
+    - goimports         # auto add/remove imports
+    - gomnd             # magic number check
+    - goprintffuncname  # printf function naming
+    - gosec             # source security check
+    - gosimple          # code simplification (merged into staticcheck)
+    - govet             # code correctness
+    - ineffassign       # ineffective assignment
+    - interfacer        # interface usage suggestions
+    - lll               # line length limit
+    - misspell          # spelling check
+    - nakedret          # naked return check
+    - nolintlint        # nolint directive check
+    - revive            # revive linter
+    - staticcheck       # static analysis
+    - stylecheck        # code style check
+    - typecheck         # type checking
+    - unconvert         # unnecessary type conversion
+    - unparam           # unused parameter check
+    - unused            # unused variables/functions
+    - varcheck          # exported variable/constant check
+    - whitespace        # whitespace check
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gomnd
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - govet
+        - unused
+        - deadcode
+        - varcheck
+        - goconst
+        - unparam
+        - bodyclose
+        - lll
+        - staticcheck
+
+run:
+  tests: false
+  timeout: 5m
+  skip-dirs:
+    - test
+  concurrency: 4
+  issues-exit-code: 1
+  skip-files:
+    - ".*\\.my\\.go$"
+    - lib/bad.go
+  modules-download-mode: readonly

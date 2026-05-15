@@ -182,6 +182,21 @@ Diagnose and fix conflicts between VPN/proxy settings and internal company domai
 - Step-by-step fix patterns for NO_PROXY, GOPRIVATE, Git host-specific proxy overrides, and `launchctl setenv`
 - Reference guide for Go private module routing and failure interpretation
 
+### golang-company-standards
+Company Go coding standards — enforces internal coding specification covering code style, error handling, naming, control structures, function design, comments, dependency management, and linting. Supersedes overlapping community skills (golang-code-style, golang-naming, golang-lint, golang-error-handling, golang-documentation, golang-testing).
+
+**Use Cases:**
+- Write Go code following company coding standards
+- Review and fix Go code to meet company specification
+- Configure golangci-lint with company standard config
+- Set up new Go projects with proper conventions
+
+**Core Features:**
+- 10 rule categories: formatting, imports, error handling, comments, naming, control structures, functions, testing, dependency management, linting
+- Mandatory/preferable/optional rule levels with clear boundaries
+- Full golangci-lint configuration (25+ linters) as a copyable reference file
+- Quick reference table for fast rule lookup during coding
+
 ## Installation
 
 ### Install via Plugin Marketplace
@@ -205,6 +220,7 @@ Then install the skills you need:
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
+/plugin install golang-company-standards@happy-claude-skills-gxj
 ```
 
 ### Install via Skills CLI
@@ -228,6 +244,7 @@ npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
+npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
 
 # List available skills before installing
 npx skills add gfishlab/happy-claude-skills --list
@@ -274,6 +291,10 @@ After installation, simply describe your needs in Claude Code:
 > "Configure Kubernetes health probes for my Go service"
 
 > "Diagnose why my Go module download fails with EOF for company private domain"
+
+> "Write Go code following our company standards"
+
+> "Fix this Go code to meet our coding specification"
 
 Claude will automatically identify and invoke the appropriate skill.
 
@@ -336,6 +357,14 @@ npx puppeteer browsers install chrome
 - Bash 3.2+
 - No additional dependencies (uses standard system tools: curl, dig, dscacheutil, launchctl, git, go)
 
+### golang-company-standards
+- Go 1.11+
+- golangci-lint v2.6.2
+
+```bash
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.6.2
+```
+
 ## Project Structure
 
 ```
@@ -381,6 +410,9 @@ happy-claude-skills/
 │       ├── agents/              # Agent configs
 │       ├── references/          # Go private module reference
 │       └── scripts/             # Diagnostic script
+│   └── golang-company-standards/
+│       ├── SKILL.md             # Skill definition
+│       └── references/          # golangci-lint config
 ├── README.md
 └── LICENSE
 ```
