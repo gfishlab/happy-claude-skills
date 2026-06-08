@@ -134,6 +134,25 @@ Markdown文档编写辅助工具，支持PlantUML/Mermaid图表生成、格式�
 - 支持单张和批量上传
 - 返回可直接用于 Markdown 的 CDN 链接
 
+### gfishimage
+手绘风格插画生成 + PicGo 图床上传一体化工具。通过兼容 Gemini 协议的 API 生成手绘漫画风格插画，自动上传 PicGo 图床并输出 CDN 链接。专为微信公众号技术文章配图设计。
+
+**适用场景：**
+- 为技术文章生成手绘风配图
+- 创建流程图、对比图、架构图（手绘风格）
+- 生成公众号封面图、头图
+- 上传生成的图片到 PicGo 图床
+- 编辑/修改已生成的图片
+
+**核心功能：**
+- 默认手绘漫画风格（蜡笔/马克笔质感、粗糙线条）
+- 智能场景识别（文章配图、封面、对比图、竖版）
+- 信息图、流程图、时间线、架构图提示词模板
+- 自动上传 PicGo Server 并清理本地文件
+- 文生图和图生图（编辑）双模式
+- 支持并发批量生成
+- 图片中文字简体中文渲染，技术术语保持英文
+
 ### agent-init
 为 Claude Code 初始化轻量项目协作骨架。生成 `CLAUDE.md` 入口文件及 `.claude/` 运行目录，包含 rules、memory、agents 及 hooks 配置。Codex 仅作为 Claude Code 临时调用的任务执行工具，不作为独立的骨架初始化目标。
 
@@ -235,6 +254,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install markdown-helper@happy-claude-skills-gxj
 /plugin install resume-review@happy-claude-skills-gxj
 /plugin install pic-upload@happy-claude-skills-gxj
+/plugin install gfishimage@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
@@ -260,6 +280,7 @@ npx skills add gfishlab/happy-claude-skills --skill report-generator
 npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
+npx skills add gfishlab/happy-claude-skills --skill gfishimage
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
@@ -301,6 +322,12 @@ claude --plugin-dir /path/to/happy-claude-skills
 > "检查markdown格式并修复问题"
 
 > "帮我评审一下简历并打分"
+
+> "画一张 MCP vs A2A 的手绘对比图"
+
+> "画一个微服务架构的手绘风格架构图"
+
+> "帮我生成一张公众号文章封面图"
 
 > "为我的项目初始化 Claude Code 协作骨架，包含规则、记忆和代理模板"
 
@@ -373,6 +400,17 @@ npx puppeteer browsers install chrome
 ### pic-upload
 - [PicGo](https://molunerfinn.com/PicGo/) 并开启 Server 服务（默认端口 36677）
 
+### gfishimage
+- Python 3.10+
+- httpx
+- [PicGo](https://molunerfinn.com/PicGo/) 并开启 Server 服务（默认端口 36677）
+
+```bash
+pip install httpx
+```
+
+首次使用需运行 `python scripts/generate_ikun.py --setup` 配置 API 端点、API Key 和模型名称。
+
 ### agent-init
 - Python 3.7+
 - 无需额外依赖（使用内置模块）
@@ -420,6 +458,10 @@ happy-claude-skills/
 │       └── SKILL.md             # Skill 定义
 │   └── pic-upload/
 │       └── SKILL.md             # Skill 定义
+│   └── gfishimage/
+│       ├── SKILL.md             # Skill 定义
+│       ├── references/          # 提示词模板
+│       └── scripts/             # 图片生成脚本
 │   └── agent-init/
 │       ├── SKILL.md             # Skill 定义
 │       ├── agents/              # Agent 配置

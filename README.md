@@ -134,6 +134,25 @@ Upload local image files to image hosting via PicGo Server and return permanent 
 - Single and batch upload modes
 - Returns CDN URLs ready for use in markdown
 
+### gfishimage
+Hand-drawn style illustration generation + PicGo image hosting upload. Generates doodle-style infographics via Gemini-protocol API, uploads to PicGo, and outputs CDN links. Designed for WeChat technical article illustrations.
+
+**Use Cases:**
+- Generate hand-drawn doodle infographics for technical articles
+- Create flowcharts, comparison charts, and architecture diagrams in sketch style
+- Generate cover images and header images for WeChat articles
+- Upload generated images to PicGo image hosting
+- Edit/regenerate existing images with new descriptions
+
+**Core Features:**
+- Default hand-drawn doodle style (crayon/marker texture, rough strokes)
+- Smart scene detection (article illustration, cover, comparison, vertical)
+- Prompt templates for infographics, flowcharts, timelines, architecture diagrams
+- Auto-upload to PicGo Server with local file cleanup
+- Text-to-image and image-to-image (edit) modes
+- Batch generation with concurrent workers
+- Chinese text rendering with English technical terms preserved
+
 ### agent-init
 Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry file and `.claude/` runtime directory with rules, memory, agents, and hook configuration. Codex is supported only as a task executor invoked by Claude Code, not as an independent scaffolding target.
 
@@ -235,6 +254,7 @@ Then install the skills you need:
 /plugin install markdown-helper@happy-claude-skills-gxj
 /plugin install resume-review@happy-claude-skills-gxj
 /plugin install pic-upload@happy-claude-skills-gxj
+/plugin install gfishimage@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
@@ -260,6 +280,7 @@ npx skills add gfishlab/happy-claude-skills --skill report-generator
 npx skills add gfishlab/happy-claude-skills --skill markdown-helper
 npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
+npx skills add gfishlab/happy-claude-skills --skill gfishimage
 npx skills add gfishlab/happy-claude-skills --skill agent-init
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
@@ -301,6 +322,12 @@ After installation, simply describe your needs in Claude Code:
 > "Check the markdown format and fix issues"
 
 > "Review my resume and give me a score"
+
+> "Generate a hand-drawn flowchart about MCP vs A2A"
+
+> "Draw a doodle-style architecture diagram for my microservices"
+
+> "Generate a cover image for my WeChat article"
 
 > "Initialize my project for Claude Code with rules, memory and agents"
 
@@ -373,6 +400,17 @@ npx puppeteer browsers install chrome
 ### pic-upload
 - [PicGo](https://molunerfinn.com/PicGo/) with Server enabled (default port 36677)
 
+### gfishimage
+- Python 3.10+
+- httpx
+- [PicGo](https://molunerfinn.com/PicGo/) with Server enabled (default port 36677)
+
+```bash
+pip install httpx
+```
+
+First-time setup requires running `python scripts/generate_ikun.py --setup` to configure API endpoint, API key, and model name.
+
 ### agent-init
 - Python 3.7+
 - No additional dependencies (uses built-in modules)
@@ -420,6 +458,10 @@ happy-claude-skills/
 │       └── SKILL.md             # Skill definition
 │   └── pic-upload/
 │       └── SKILL.md             # Skill definition
+│   └── gfishimage/
+│       ├── SKILL.md             # Skill definition
+│       ├── references/          # Prompt templates
+│       └── scripts/             # Image generation scripts
 │   └── agent-init/
 │       ├── SKILL.md             # Skill definition
 │       ├── agents/              # Agent configs
