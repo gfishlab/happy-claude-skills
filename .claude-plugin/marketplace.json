@@ -47,7 +47,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/agent-init"
+        "./skills/agent-init",
+        "./skills/skill-updator"
       ]
     }
   ]

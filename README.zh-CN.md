@@ -169,6 +169,22 @@ Markdown文档编写辅助工具，支持PlantUML/Mermaid图表生成、格式�
 - 可选 `docs-profile=engineering` 初始化工程文档骨架（架构/计划/任务）
 - 提供 Python CLI 脚本（`scripts/init_agent.py`）自动化初始化
 
+### skill-updator
+一键更新本机全局安装的 skills，并顺带更新常见 CLI 工具。屏蔽 `skills` 工具默认向所有 agent 安装时产生的无关噪音。
+
+**适用场景：**
+- 更新 / 升级本机全局 skills
+- 把 well-known skill 更到最新
+- 顺带更新常见 CLI（npm 全局包、brew formula、pipx 应用等）
+
+**核心功能：**
+- `npx skills check -g` 更新可自动检测的常规全局 skill
+- 自动解析 well-known skill 的 add URL，用 `-a` 指定 agent 重新拉取（避免无关 agent 噪音）
+- 默认更新到 agent `claude-code`、`codex`、`kiro-cli`，可追加其它 agent（如 `opencode`、`cursor`）
+- 顺带更新常见 CLI，配置化的工具清单（npm/brew/pipx/自更新型/手动二进制五类来源）
+- 仅在检测到有新版时才更新；本地未安装的工具汇总成清单并可按需选择安装
+- 兼容 macOS 自带 bash 3.2
+
 ### GoCloudNativeBestPractices
 Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang)（覆盖代码风格、错误处理、并发、测试等）的部署专属指导。
 
@@ -256,6 +272,7 @@ Golang 云原生部署模式，用于容器化 Go 服务。补充 [samber/cc-ski
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install gfishimage@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
+/plugin install skill-updator@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 /plugin install golang-company-standards@happy-claude-skills-gxj
@@ -282,6 +299,7 @@ npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill gfishimage
 npx skills add gfishlab/happy-claude-skills --skill agent-init
+npx skills add gfishlab/happy-claude-skills --skill skill-updator
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
@@ -468,6 +486,9 @@ happy-claude-skills/
 │       ├── references/          # 参考文档
 │       ├── scripts/             # 初始化脚本
 │       └── templates/           # 骨架模板
+│   └── skill-updator/
+│       ├── SKILL.md             # Skill 定义
+│       └── scripts/             # skill/CLI 更新脚本
 │   └── GoCloudNativeBestPractices/
 │       ├── SKILL.md             # Skill 定义
 │       └── references/          # Go 模式与版本兼容指南

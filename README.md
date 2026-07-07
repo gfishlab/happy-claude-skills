@@ -169,6 +169,22 @@ Lightweight project scaffolding for Claude Code. Initializes `CLAUDE.md` entry f
 - Optional `docs-profile=engineering` for architecture/plan/task document scaffolding
 - Python CLI script (`scripts/init_agent.py`) for automated initialization
 
+### skill-updator
+One-command updater for globally installed skills, plus common CLI tools. Suppresses the noise produced when the `skills` tool installs to all agents by default.
+
+**Use Cases:**
+- Update/upgrade local global skills
+- Bring well-known skills to their latest versions
+- Also update common CLIs (npm globals, brew formulae, pipx apps, etc.)
+
+**Core Features:**
+- `npx skills check -g` to update auto-detectable global skills
+- Auto-parses well-known skill add URLs and re-adds them with `-a` to target specific agents (avoiding unrelated-agent noise)
+- Defaults to agents `claude-code`, `codex`, `kiro-cli`; extra agents (e.g. `opencode`, `cursor`) can be appended
+- Also refreshes common CLIs via a configurable tool list (five sources: npm/brew/pipx/self-updating/manual binaries)
+- Only updates when a newer version is detected; summarizes not-installed tools into a list for optional install
+- Compatible with macOS system bash 3.2
+
 ### GoCloudNativeBestPractices
 Golang cloud-native deployment patterns for containerized Go services. Complements [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) (which covers code style, error handling, concurrency, testing, etc.) with deployment-specific guidance.
 
@@ -256,6 +272,7 @@ Then install the skills you need:
 /plugin install pic-upload@happy-claude-skills-gxj
 /plugin install gfishimage@happy-claude-skills-gxj
 /plugin install agent-init@happy-claude-skills-gxj
+/plugin install skill-updator@happy-claude-skills-gxj
 /plugin install GoCloudNativeBestPractices@happy-claude-skills-gxj
 /plugin install proxy-domain-conflict-debugging@happy-claude-skills-gxj
 /plugin install golang-company-standards@happy-claude-skills-gxj
@@ -282,6 +299,7 @@ npx skills add gfishlab/happy-claude-skills --skill resume-review
 npx skills add gfishlab/happy-claude-skills --skill pic-upload
 npx skills add gfishlab/happy-claude-skills --skill gfishimage
 npx skills add gfishlab/happy-claude-skills --skill agent-init
+npx skills add gfishlab/happy-claude-skills --skill skill-updator
 npx skills add gfishlab/happy-claude-skills --skill GoCloudNativeBestPractices
 npx skills add gfishlab/happy-claude-skills --skill proxy-domain-conflict-debugging
 npx skills add gfishlab/happy-claude-skills --skill golang-company-standards
@@ -468,6 +486,9 @@ happy-claude-skills/
 │       ├── references/          # Reference docs
 │       ├── scripts/             # Init script
 │       └── templates/           # Scaffold templates
+│   └── skill-updator/
+│       ├── SKILL.md             # Skill definition
+│       └── scripts/             # Skill/CLI update scripts
 │   └── GoCloudNativeBestPractices/
 │       ├── SKILL.md             # Skill definition
 │       └── references/          # Go patterns & version compat guides
